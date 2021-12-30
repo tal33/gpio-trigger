@@ -30,7 +30,7 @@ ACTION_FUNCTIONS = {
 
 
 if __name__ == '__main__':
-    gpio = int(sys.argv[1])
+    board_pin = int(sys.argv[1])
     action_type = sys.argv[2]
     action = sys.argv[3]
 
@@ -41,13 +41,13 @@ if __name__ == '__main__':
     event_queue = queue.Queue()
     threading.Thread(target=execute_action, args=(event_queue, ACTION_FUNCTIONS[action_type], action), daemon=True).start()
 
-    GPIO.setmode(GPIO.BCM)
-    GPIO.setup(gpio, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+    GPIO.setmode(GPIO.BOARD)
+    GPIO.setup(board_pin, GPIO.IN, pull_up_down=GPIO.PUD_UP)
     #
     # bouncetime
     # https://sourceforge.net/p/raspberry-gpio-python/wiki/Inputs/
     #
     while True:
-        GPIO.wait_for_edge(gpio, GPIO.FALLING, bouncetime=200)
+        GPIO.wait_for_edge(board_pin, GPIO.FALLING, bouncetime=200)
         event_queue.put(1, False)
 

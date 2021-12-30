@@ -16,7 +16,6 @@
     debian_packages:
       - python3
       - python3-pip
-      - vim
 
     python_packages:
       - RPi.GPIO
@@ -44,6 +43,7 @@
 - name: Install gpio-trigger as systemd service
   hosts: my_pi
   gather_facts: false
+  tags: [ systemd ]
 
   vars:
     systemd_service_template: "gpio-trigger.service.j2"
@@ -51,16 +51,12 @@
 
   roles:
     - name: systemd
-      systemd_service: "volup"
-      gpio_trigger_command: "{{ gpio_trigger_executable }} 13 command '/usr/bin/amixer -q -c sndrpihifiberry sset SoftMaster 2%+'"
+      systemd_service: "gpio-trigger-volumio-next"
+      gpio_trigger_command: "{{ gpio_trigger_executable }} 13 curl 'http://localhost:3000/api/v1/commands/?cmd=next'"
 
     - name: systemd
-      systemd_service: "voldown"
-      gpio_trigger_command: "{{ gpio_trigger_executable }} 5 command '/usr/bin/amixer -q -c sndrpihifiberry sset SoftMaster 2%-'"
-
-    - name: systemd
-      systemd_service: "pi-shutdown"
-      gpio_trigger_command: "{{ gpio_trigger_executable }} 4 command 'shutdown -h now'"
+      systemd_service: "gpio-trigger-pi-shutdown"
+      gpio_trigger_command: "{{ gpio_trigger_executable }} 5 command 'shutdown -h now'"
 
 
   pre_tasks:
@@ -81,6 +77,5 @@
         state: restarted
       become: yes
       loop:
-        - volup
-        - voldown
-        - pi-shutdown
+        - gpio-trigger-volumio-next
+        - gpio-trigger-pi-shutdown
