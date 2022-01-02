@@ -52,11 +52,11 @@
   roles:
     - name: systemd
       systemd_service: "gpio-trigger-volumio-next"
-      gpio_trigger_command: "{{ gpio_trigger_executable }} 13 curl 'http://localhost:3000/api/v1/commands/?cmd=next'"
+      gpio_trigger_command: "{{ gpio_trigger_executable }} 13 none curl 'http://localhost:3000/api/v1/commands/?cmd=next'"
 
     - name: systemd
       systemd_service: "gpio-trigger-pi-shutdown"
-      gpio_trigger_command: "{{ gpio_trigger_executable }} 5 command 'shutdown -h now'"
+      gpio_trigger_command: "{{ gpio_trigger_executable }} 5 red command 'shutdown -h now'"
 
 
   handlers:
