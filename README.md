@@ -12,13 +12,14 @@
 # Usage
 
 ```
-gpio-trigger.py <*board*_pin_number> <action_type> <action>
+gpio-trigger.py <*board*_pin_number> <color> <action_type> <action>
 ```
+* supported colors so far are none, red, green, blue, yellow, white where 'none' bypasses all rgb color GPIO handling
 
 * example:
 ```
-gpio-trigger.py 13 curl 'http://localhost:3000/api/v1/commands/?cmd=next'
-gpio-trigger.py 5 command 'shutdown -h now'
+gpio-trigger.py 13 none curl 'http://localhost:3000/api/v1/commands/?cmd=next'
+gpio-trigger.py 5 red command 'shutdown -h now'
 ```
 
 # Automated Installation
