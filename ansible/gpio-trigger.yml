@@ -47,7 +47,7 @@
 
   vars:
     systemd_service_template: "gpio-trigger.service.j2"
-    gpio_trigger_executable: "/etc/systemd/system/gpio-trigger.py"
+    gpio_trigger_executable: "/home/volumio/devel/gpio-trigger/gpio-trigger.py"
 
   roles:
     - name: systemd
@@ -58,16 +58,6 @@
       systemd_service: "gpio-trigger-pi-shutdown"
       gpio_trigger_command: "{{ gpio_trigger_executable }} 5 command 'shutdown -h now'"
 
-
-  pre_tasks:
-
-    - name: "Copy gpio-trigger executable"
-      copy:
-        src: "../gpio-trigger.py"
-        dest: "{{ gpio_trigger_executable }}"
-        mode: 0700
-      become: yes
-      notify: Restart systemd services
 
   handlers:
 

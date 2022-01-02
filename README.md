@@ -25,9 +25,11 @@ gpio-trigger.py 5 command 'shutdown -h now'
 * automated installation is achieved by using [Ansible](https://docs.ansible.com/ansible/latest/index.html)
 * Ansible is an automation tool, if you wanna know more about it have a look at 
   https://docs.ansible.com/ansible/latest/index.html
-* replace the contents of the file *inventory* to point to your music box (e.g. my_raspi_host)
+* replace the contents of the file *inventory* to point to your raspberry pi (e.g. my_raspi_host)
 * since this contains your password it is recommended that you *copy* inventory to a new file *my-inventory* (which is ignopred from git) so you don't accidentally push your settings
 * execute the ansible playbook, it might execute for a while if it needs to update / install stuff
+* it is asumed that you did check out this repository to /home/volumio/devel/gpio-trigger
+  if you use a different directory please changethe path in ansible/gpio-trigger.yml (variable gpio_trigger_executable)
 ```
 $ cd gpio-trigger/ansible
 $ ansible-playbook -i my-inventory gpio-trigger.yml 
