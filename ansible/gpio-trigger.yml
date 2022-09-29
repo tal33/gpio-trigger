@@ -56,7 +56,7 @@
 
     - name: systemd
       systemd_service: "gpio-trigger-pi-shutdown"
-      gpio_trigger_command: "{{ gpio_trigger_executable }} 5 red command 'shutdown -h now'"
+      gpio_trigger_command: "{{ gpio_trigger_executable }} 37 red command 'shutdown -h now'"
 
 
   handlers:
